@@ -13348,3 +13348,23 @@ Copyright (c) 2015 Daniel Eden
     padding-right: 0; }
 
 /*# sourceMappingURL=black-dashboard.css.map */
+
+
+.socials-container {
+    display: flex;
+    align-items: center;
+}
+
+.socials-icons {
+    display: flex;
+    margin-left: 10px; /* Или любое другое значение для отступа иконок от текста */
+}
+
+.socials-icons i {
+    font-size: 24px; /* или любой другой размер, который вы хотите установить */
+    margin-right: 10px; /* Отступ между иконками */
+}
+.project-description {
+    font-style: italic; /* делает текст курсивным */
+    color: #f8f9fa; /* чуть менее яркий белый, адаптируйте по необходимости */
+}

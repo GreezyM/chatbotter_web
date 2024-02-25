@@ -31,7 +31,7 @@ def project_template():
 #     # with open('apps/static/project/project_list.json') as f:
 #     #     project_list = json.load(f)
 #
-#     return render_template('home/page-404.html', segment=segment, project_list="project_list")
+    return render_template('home/project.html', segment=segment, project_list=project_list)
 
 
 @blueprint.route('/<template>')
