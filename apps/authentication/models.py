@@ -1,7 +1,4 @@
 # -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
 
 from flask_login import UserMixin
 
@@ -65,3 +62,22 @@ def request_loader(request):
 class OAuth(OAuthConsumerMixin, db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("Users.id", ondelete="cascade"), nullable=False)
     user = db.relationship(Users)
+
+
+class Project(db.Model):
+    __tablename__ = 'projects'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    type = db.Column(db.String(50), nullable=False)
+    company = db.Column(db.String(100), nullable=False)
+    status = db.Column(db.Integer, nullable=False)  # Измененный тип столбца
+    description = db.Column(db.String(250), nullable=True)
+    socials = db.Column(db.String(250), nullable=True)
+
+    def __init__(self, **kwargs):
+        super(Project, self).__init__(**kwargs)
+
+    def __repr__(self):
+        return f"<Project {self.name}>"
+

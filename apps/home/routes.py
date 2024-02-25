@@ -7,6 +7,7 @@ from apps.home import blueprint
 from flask import render_template, request
 from flask_login import login_required
 from jinja2 import TemplateNotFound
+from apps.home.chatbotter import funcs
 import json
 
 
@@ -22,11 +23,15 @@ def index():
 def project_template():
     segment = get_segment(request)
 
-    # Здесь надо добавить взятие из БД project_list
-    with open('apps/static/project/project_list.json') as f:
-        project_list = json.load(f)
+    project_list = funcs.get_all_projects()
 
-    return render_template('home/page-404.html', segment=segment, project_list=project_list)
+
+#
+#     # # Здесь надо добавить взятие из БД project_list
+#     # with open('apps/static/project/project_list.json') as f:
+#     #     project_list = json.load(f)
+#
+#     return render_template('home/page-404.html', segment=segment, project_list="project_list")
 
 
 @blueprint.route('/<template>')
