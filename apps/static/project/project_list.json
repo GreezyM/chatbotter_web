@@ -1,0 +1,29 @@
+{
+  "project_id_1": {
+    "id": 1,
+    "name": "Консультант Ильяс",
+    "type": "neuro-connsult",
+    "company": "Pro-Zabory",
+    "status": 1,
+    "description": "Test Test Test",
+    "socials": "1111"
+  },
+  "project_id_2": {
+    "id": 1,
+    "name": "Консультант Ильяс",
+    "type": "neuro-connsult",
+    "company": "Pro-Zabory",
+    "status": 1,
+    "description": "Test Test Test",
+    "socials": "1111"
+  },
+  "project_id_3": {
+    "id": 1,
+    "name": "Консультант Ильяс",
+    "type": "neuro-connsult",
+    "company": "Pro-Zabory",
+    "status": 1,
+    "description": "Test Test Test",
+    "socials": "1111"
+  }
+}
