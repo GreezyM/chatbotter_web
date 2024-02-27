@@ -8,7 +8,6 @@ from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_required
 from jinja2 import TemplateNotFound
 from apps.home.chatbotter import funcs
-import json
 
 
 @blueprint.route('/index')
