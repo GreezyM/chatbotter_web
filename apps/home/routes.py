@@ -4,7 +4,7 @@ Copyright (c) 2019 - present AppSeed.us
 """
 
 from apps.home import blueprint
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_required
 from jinja2 import TemplateNotFound
 from apps.home.chatbotter import funcs
@@ -48,30 +48,55 @@ def new_project():
 
 @blueprint.route('/project',methods=['GET', 'POST'])
 @login_required
-def project_template():
+def projects():
     segment = get_segment(request)
 
     project_list = funcs.get_all_projects()
 
     return render_template('home/project.html', segment=segment, project_list=project_list)
 
+
 @blueprint.route('/config-project')
 def config_project():
     project_id = request.args.get('projectId')
     if project_id:
-        project = Project.query.filter_by(id=project_id).first()
+        # Используем функцию get_project_by_id для получения данных проекта
+        project = funcs.get_project_by_id(project_id)
         if project:
-            return render_template('config-project.html', project=project)
-    return redirect(url_for('your_fallback_route'))
+            return render_template('home/config-project.html', project=project)
+    # Если проект не найден или project_id не предоставлен, перенаправляем на заданный маршрут
+    return redirect(url_for('home_blueprint.index'))  # Замените 'your_fallback_route'
 
-@blueprint.route('/config-project.html')
-def config_project():
-    project_id = request.args.get('projectId')
 
-    print(project_id)
-    # Здесь вы загружаете данные проекта из базы данных по project_id
-    # и передаете их в шаблон
-    return render_template('home/config-project.html', project_data="project_data")
+@blueprint.route('/update_project/<int:project_id>', methods=['POST'])
+def update_project(project_id):
+    try:
+        # Используем project_id для получения текущего проекта
+        project = funcs.get_project_by_id(project_id)
+        if project:
+            # Обновляем поля проекта данными из формы
+            project.name = request.form.get('name')
+            project.type = request.form.get('type')
+            project.company = request.form.get('company')
+            project.status = request.form.get('status')
+            project.socials = request.form.get('socials')
+            project.description = request.form.get('description')
+            project.prompt = request.form.get('prompt')
+            project.tg_token = request.form.get('tg_token')
+            project.instagram_token = request.form.get('instagram_token')
+            project.whatsapp_token = request.form.get('whatsapp_token')
+
+            # Сохраняем изменения в базе данных
+            funcs.update_project_in_db(project)  # Убедитесь, что у вас есть функция update_project_in_db в модуле funcs
+
+            flash('Project updated successfully.', 'success')
+        else:
+            flash('Project not found.', 'error')
+    except Exception as e:
+        flash(f'Error updating project: {e}', 'error')
+
+    # После обновления перенаправляем на страницу проекта или другую страницу
+    return redirect(url_for('home_blueprint.projects'))
 
 
 @blueprint.route('/<template>')

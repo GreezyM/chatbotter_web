@@ -36,23 +36,21 @@ def get_all_projects():
     ]
 
 
-def update_project_in_db(project_id, **kwargs):
+def update_project_in_db(project, **kwargs):
     """
-    Обновляет существующий проект в базе данных по его id.
+    Обновляет существующий проект в базе данных.
 
-    :param project_id: ID проекта для обновления
-    :param kwargs: Поля проекта для обновления (name, type, company, status, description, socials)
+    :param project: Объект проекта с уже обновленными данными
     """
-    project = Project.query.get(project_id)
-    if not project:
-        return {"message": "Project not found"}, 404
-
-    for key, value in kwargs.items():
-        if hasattr(project, key):
-            setattr(project, key, value)
-
-    db.session.commit()
-    return {"message": "Project updated successfully"}, 200
+    try:
+        db.session.add(project)  # Помечаем объект как "измененный" для сохранения в базе данных
+        db.session.commit()
+        # Возвращаем сообщение об успешном обновлении
+        return {"message": "Project updated successfully"}, 200
+    except Exception as e:
+        # В случае ошибки при обновлении возвращаем сообщение об ошибке
+        db.session.rollback()
+        return {"message": f"Error updating project: {str(e)}"}, 500
 
 
 def get_project_by_id(project_id):
@@ -64,19 +62,20 @@ def get_project_by_id(project_id):
     """
     project = Project.query.get(project_id)
     if project:
-        return {
-            "id": project.id,
-            "name": project.name,
-            "type": project.type,
-            "company": project.company,
-            "status": project.status,
-            "description": project.description,
-            "socials": project.socials,
-            "prompt": project.prompt,
-            "tg_token": project.tg_token,
-            "instagram_token": project.instagram_token,
-            "whatsapp_token": project.whatsapp_token
-        }
+        return project
+        # return {
+        #     "id": project.id,
+        #     "name": project.name,
+        #     "type": project.type,
+        #     "company": project.company,
+        #     "status": project.status,
+        #     "description": project.description,
+        #     "socials": project.socials,
+        #     "prompt": project.prompt,
+        #     "tg_token": project.tg_token,
+        #     "instagram_token": project.instagram_token,
+        #     "whatsapp_token": project.whatsapp_token
+        # }
     return None
 
 
