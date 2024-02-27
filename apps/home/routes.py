@@ -43,6 +43,19 @@ def new_project():
     return render_template('home/new-project.html')
 
 
+@blueprint.route('/delete_project/<int:project_id>', methods=['GET', 'POST'])
+@login_required
+def delete_project(project_id):
+    # Используем вашу функцию для удаления проекта
+    result = funcs.delete_project_by_id(project_id)
+    message = result.get("message", "An error occurred.")
+    if "successfully" in message:
+        flash(message, 'success')
+    else:
+        flash(message, 'error')
+
+    return redirect(url_for('home_blueprint.projects'))
+
 @blueprint.route('/project',methods=['GET', 'POST'])
 @login_required
 def projects():
