@@ -1,19 +1,15 @@
 # -*- encoding: utf-8 -*-
 
-
 from apps.home import blueprint
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_required
 from jinja2 import TemplateNotFound
 from apps.home.chatbotter import funcs
 
-
 @blueprint.route('/index')
 @login_required
 def index():
-
     return render_template('home/index.html', segment='index')
-
 
 @blueprint.route('/new_project', methods=['GET', 'POST'])
 def new_project():
@@ -32,16 +28,15 @@ def new_project():
 
         # Вызываем функцию для добавления нового проекта
         funcs.add_project_to_db(name=name, type=project_type, company=company, status=status,
-                          socials=socials, description=description, prompt=prompt,
-                          tg_token=tg_token, instagram_token=instagram_token,
-                          whatsapp_token=whatsapp_token)
+                                socials=socials, description=description, prompt=prompt,
+                                tg_token=tg_token, instagram_token=instagram_token,
+                                whatsapp_token=whatsapp_token)
 
-        # Перенаправляем пользователя на страницу со списком проектов или на другую страницу
-        return redirect(url_for('home_blueprint.index'))  # 'index' - название функции представления для главной страницы/списка проектов
+        # Перенаправляем пользователя на страницу со списком проектов
+        return redirect(url_for('home_blueprint.projects'))
 
     # Для GET запроса просто отображаем форму
     return render_template('home/new-project.html')
-
 
 @blueprint.route('/delete_project/<int:project_id>', methods=['GET', 'POST'])
 @login_required
@@ -56,7 +51,7 @@ def delete_project(project_id):
 
     return redirect(url_for('home_blueprint.projects'))
 
-@blueprint.route('/project',methods=['GET', 'POST'])
+@blueprint.route('/project', methods=['GET', 'POST'])
 @login_required
 def projects():
     segment = get_segment(request)
@@ -64,7 +59,6 @@ def projects():
     project_list = funcs.get_all_projects()
 
     return render_template('home/project.html', segment=segment, project_list=project_list)
-
 
 @blueprint.route('/config-project')
 def config_project():
@@ -74,9 +68,8 @@ def config_project():
         project = funcs.get_project_by_id(project_id)
         if project:
             return render_template('home/config-project.html', project=project)
-    # Если проект не найден или project_id не предоставлен, перенаправляем на заданный маршрут
-    return redirect(url_for('home_blueprint.index'))  # Замените 'your_fallback_route'
-
+    # Если проект не найден или project_id не предоставлен, перенаправляем на страницу списка проектов
+    return redirect(url_for('home_blueprint.index'))
 
 @blueprint.route('/update_project/<int:project_id>', methods=['POST'])
 def update_project(project_id):
@@ -97,7 +90,7 @@ def update_project(project_id):
             project.whatsapp_token = request.form.get('whatsapp_token')
 
             # Сохраняем изменения в базе данных
-            funcs.update_project_in_db(project)  # Убедитесь, что у вас есть функция update_project_in_db в модуле funcs
+            funcs.update_project_in_db(project)
 
             flash('Project updated successfully.', 'success')
         else:
@@ -105,16 +98,12 @@ def update_project(project_id):
     except Exception as e:
         flash(f'Error updating project: {e}', 'error')
 
-    # После обновления перенаправляем на страницу проекта или другую страницу
     return redirect(url_for('home_blueprint.projects'))
-
 
 @blueprint.route('/<template>')
 @login_required
 def route_template(template):
-
     try:
-
         if not template.endswith('.html'):
             template += '.html'
 
@@ -123,27 +112,16 @@ def route_template(template):
 
         # Serve the file (if exists) from app/templates/home/FILE.html
         return render_template("home/" + template, segment=segment)
-
     except TemplateNotFound:
         return render_template('home/page-404.html'), 404
-
     except:
         return render_template('home/page-500.html'), 500
 
-
-# Helper - Extract current page name from request
 def get_segment(request):
-
     try:
-
         segment = request.path.split('/')[-1]
-
         if segment == '':
             segment = 'index'
-        elif segment == 'config-project':
-            segment = "project"
-
         return segment
-
     except:
-        return None
+        return 'index'
