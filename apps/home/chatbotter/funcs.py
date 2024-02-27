@@ -1,18 +1,19 @@
 from apps import db
 from apps.authentication.models import Project
 
-def add_project_to_db(name, type, company, status, description='', socials=''):
-    """
-    Добавляет проект в базу данных.
+def add_project_to_db(name, type, company, status, socials, description='', prompt='', tg_token='', instagram_token='', whatsapp_token=''):
 
-    :param name: Название проекта
-    :param type: Тип проекта
-    :param company: Компания, к которой относится проект
-    :param status: Статус проекта
-    :param description: Описание проекта (необязательно)
-    :param socials: Социальные сети проекта (необязательно)
-    """
-    new_project = Project(name=name, type=type, company=company, status=status, description=description, socials=socials)
+    new_project = Project(
+        name=name,
+        type=type,
+        company=company,
+        status=status,
+        description=description,
+        socials=socials,
+        prompt=prompt,
+        tg_token=tg_token,
+        instagram_token=instagram_token,
+        whatsapp_token=whatsapp_token)
     db.session.add(new_project)
     db.session.commit()
 
@@ -52,3 +53,43 @@ def update_project_in_db(project_id, **kwargs):
 
     db.session.commit()
     return {"message": "Project updated successfully"}, 200
+
+
+def get_project_by_id(project_id):
+    """
+    Возвращает детали проекта по его ID.
+
+    :param project_id: ID проекта
+    :return: Словарь с информацией о проекте или None, если проект не найден
+    """
+    project = Project.query.get(project_id)
+    if project:
+        return {
+            "id": project.id,
+            "name": project.name,
+            "type": project.type,
+            "company": project.company,
+            "status": project.status,
+            "description": project.description,
+            "socials": project.socials,
+            "prompt": project.prompt,
+            "tg_token": project.tg_token,
+            "instagram_token": project.instagram_token,
+            "whatsapp_token": project.whatsapp_token
+        }
+    return None
+
+
+def delete_project_by_id(project_id):
+    """
+    Удаляет проект из базы данных по его ID.
+
+    :param project_id: ID проекта для удаления
+    :return: Словарь с сообщением о результате операции
+    """
+    project = Project.query.get(project_id)
+    if project:
+        db.session.delete(project)
+        db.session.commit()
+        return {"message": "Project deleted successfully"}
+    return {"message": "Project not found"}

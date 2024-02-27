@@ -13368,3 +13368,28 @@ Copyright (c) 2015 Daniel Eden
     font-style: italic; /* делает текст курсивным */
     color: #f8f9fa; /* чуть менее яркий белый, адаптируйте по необходимости */
 }
+.project-buttons {
+    margin-bottom: 10px; /* Добавляет отступ снизу */
+}
+
+.header-content {
+    display: flex;
+    align-items: center; /* Выравнивает элементы по центру по вертикали */
+    justify-content: space-between; /* Распределяет пространство между элементами */
+}
+
+.card-category, .project-id {
+    margin: 0; /* Убирает стандартные отступы для h5 */
+    padding-right: 10px; /* Добавляет небольшой отступ справа, если нужно */
+}
+.dark-dropdown {
+
+    color: #FFFFFF; /* Цвет текста */
+    border: 1px solid #2b3553; /* Граница, если необходимо */
+}
+
+.dark-dropdown option {
+    background-color: #252525; /* Цвет фона опций */
+    color: #FFFFFF; /* Цвет текста опций */
+}
+

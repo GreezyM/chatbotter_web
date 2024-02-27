@@ -1,0 +1,101 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Project {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="content">
+        <div class="col-lg-6 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="title">New Project</h5>
+            </div>
+            <div class="card-body">
+                <form action="/new_project" method="post">
+                    <!-- Имя проекта -->
+                    <div class="form-group">
+                        <label for="name">Project Name</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter project name" required>
+                    </div>
+
+                    <!-- Тип проекта -->
+                    <div class="form-group">
+                        <label for="type">Project Type</label>
+                        <select id="type" name="type" class="form-control dark-dropdown">
+                            <option value="neuro-consult">neuro-consult</option>
+                        </select>
+                    </div>
+
+                    <!-- Компания -->
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company" class="form-control" placeholder="Enter company name" required>
+                    </div>
+
+                    <!-- Статус -->
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <select id="status" name="status" class="form-control dark-dropdown">
+                            <option value="1">Active</option>
+                            <option value="0">Disabled</option>
+                        </select>
+                    </div>
+
+                    <!-- Социальные сети -->
+                    <div class="form-group">
+                        <label for="socials">Socials</label>
+                        <input type="text" id="socials" name="socials" class="form-control" placeholder="Enter socials code 111" required>
+                    </div>
+
+                    <!-- Описание -->
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" class="form-control" rows="3" placeholder="Project description"></textarea>
+                    </div>
+
+                    <!-- Prompt -->
+                    <div class="form-group">
+                        <label for="prompt">Prompt</label>
+                        <textarea id="prompt" name="prompt" class="form-control" rows="4" placeholder="Enter prompt text"></textarea>
+                    </div>
+
+                    <!-- Токены -->
+                    <div class="form-group">
+                        <label for="tg_token">Telegram Token</label>
+                        <input type="text" id="tg_token" name="tg_token" class="form-control" placeholder="Telegram token">
+                    </div>
+                    <div class="form-group">
+                        <label for="instagram_token">Instagram Token</label>
+                        <input type="text" id="instagram_token" name="instagram_token" class="form-control" placeholder="Instagram token">
+                    </div>
+                    <div class="form-group">
+                        <label for="whatsapp_token">WhatsApp Token</label>
+                        <input type="text" id="whatsapp_token" name="whatsapp_token" class="form-control" placeholder="WhatsApp token">
+                    </div>
+
+                    <!-- Кнопка отправки формы -->
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-fill btn-primary">Create Project</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+
+<script>
+    $(document).ready(function () {
+        // Javascript method's body can be found in assets/js/demos.js
+        demo.initDashboardPageCharts();
+
+    });
+</script>
+
+{% endblock javascripts %}

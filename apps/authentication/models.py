@@ -73,7 +73,11 @@ class Project(db.Model):
     company = db.Column(db.String(100), nullable=False)
     status = db.Column(db.Integer, nullable=False)  # Измененный тип столбца
     description = db.Column(db.String(250), nullable=True)
-    socials = db.Column(db.String(250), nullable=True)
+    socials = db.Column(db.String(250), nullable=False)
+    prompt = db.Column(db.Text, nullable=True)
+    tg_token = db.Column(db.String(250), nullable=True)
+    instagram_token = db.Column(db.String(250), nullable=True)
+    whatsapp_token = db.Column(db.String(250), nullable=True)
 
     def __init__(self, **kwargs):
         super(Project, self).__init__(**kwargs)

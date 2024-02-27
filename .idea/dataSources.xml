@@ -13,17 +13,5 @@
         </library>
       </libraries>
     </data-source>
-    <data-source source="LOCAL" name="projects" uuid="2eed8ebb-15ae-423a-816f-cbec831e3b41">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\marty\OneDrive\Рабочий стол\black-dashboard-flask-master\apps\projects.sqlite3</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-      <libraries>
-        <library>
-          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.43.0/org/xerial/sqlite-jdbc/3.43.0.0/sqlite-jdbc-3.43.0.0.jar</url>
-        </library>
-      </libraries>
-    </data-source>
   </component>
 </project>

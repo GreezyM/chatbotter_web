@@ -8,44 +8,56 @@
 {% block content %}
 
     <div class="content">
+        <div class="project-buttons">
+            <div class="row">
+                <div class="col-lg-4">
+                <a href="/new-project.html"><button type="button" class="btn btn-warning animation-on-hover"><i class="tim-icons icon-settings-gear-63"></i>New Project</button></a>
+                </div>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-lg-4">
+
 
             {% for project in project_list %}
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-category">{{ project.type }}</h5>
-                        <h3 class="card-title"><i class="tim-icons icon-tap-02 text-primary"></i>{{ project.name }}</h3>
-
-                    </div>
-                    <div class="card-body">
-
-                        <h4 class="card-text">Status:
-                            <span class="{{ 'text-success' if project.status == 1 else 'text-danger' }}">
-                                {{ 'ACTIVE' if project.status == 1 else 'DISABLED' }}
-                            </span>
-                        </h4>
-
-                        <h4 class="card-text">Company: {{ project.company }}</h4>
-                        <div class="socials-container">
-                        <h4 class="card-text">Socials:</h4>
-                            <div class="socials-icons">
-                                {% set socials = project.socials %}
-                                <i class="fab fa-whatsapp {% if socials[0] == '0' %}text-gray{% else %}text-success{% endif %}"></i>
-                                <i class="fab fa-instagram {% if socials[1] == '0' %}text-gray{% else %}text-success{% endif %}"></i>
-                                <i class="fab fa-telegram {% if socials[2] == '0' %}text-gray{% else %}text-success{% endif %}"></i>
+                <div class="col-lg-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="header-content">
+                                <h5 class="card-category">{{ project.type }}</h5>
+                                <h5 class="card-category project-id">ID: {{ project.id }}</h5>
                             </div>
+                            <h3 class="card-title"><i class="tim-icons icon-tap-02 text-primary"></i>{{ project.name }}</h3>
+
                         </div>
-                        <p class="project-description">{{ project.description }}</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="/config-project.html"><button type="button" class="btn btn-fill btn-primary"><i class="tim-icons icon-settings-gear-63"></i>Configure</button></a>
+                        <div class="card-body">
+
+                            <h4 class="card-text">Status:
+                                <span class="{{ 'text-success' if project.status == 1 else 'text-danger' }}">
+                                    {{ 'ACTIVE' if project.status == 1 else 'DISABLED' }}
+                                </span>
+                            </h4>
+
+                            <h4 class="card-text">Company: {{ project.company }}</h4>
+                            <div class="socials-container">
+                            <h4 class="card-text">Socials:</h4>
+                                <div class="socials-icons">
+                                    {% set socials = project.socials %}
+                                    <i class="fab fa-whatsapp {% if socials[0] == '0' %}text-gray{% else %}text-success{% endif %}"></i>
+                                    <i class="fab fa-instagram {% if socials[1] == '0' %}text-gray{% else %}text-success{% endif %}"></i>
+                                    <i class="fab fa-telegram {% if socials[2] == '0' %}text-gray{% else %}text-success{% endif %}"></i>
+                                </div>
+                            </div>
+                            <p class="project-description">{{ project.description }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="/config-project.html?projectId={{ project.id }}"><button type="button" class="btn btn-fill btn-primary"><i class="tim-icons icon-settings-gear-63"></i>Configure</button></a>
+                        </div>
                     </div>
                 </div>
-                {% endfor %}
+            {% endfor %}
 
 
-            </div>
+
         </div>
     </div>
 
